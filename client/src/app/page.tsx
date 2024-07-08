@@ -6,6 +6,7 @@ import Navbar from '../components/Navbar';
 import Footer from '../components/Footer';
 import ExpartAdviceCard from '../components/ExpartAdviceCard';
 import ScientificCultivationCard from '../components/ScientificCultivationCard';
+import AI_GeneratedPastSuggestion from '../components/AI_GeneratedPastSuggestion';
 
 const App: React.FC = () => {
   const userData = {
@@ -41,7 +42,7 @@ const App: React.FC = () => {
       imageUrl: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
       fullDescriptionPage: '/full-description/vertical-farming',
     },
-    
+
   ];
 
   return (
@@ -58,21 +59,24 @@ const App: React.FC = () => {
           />
         </div>
         <div className="p-6">
-      <ExpartAdviceCard 
-        title="Crop Rotation"
-        description="Rotate crops every season to prevent soil depletion and pest accumulation."
-        postedDate="1 day ago"
-        imageUrl="https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg"
-        fullDescriptionPage="/full-description-page"
-      />
-    </div>
+          <ExpartAdviceCard
+            title="Crop Rotation"
+            description="Rotate crops every season to prevent soil depletion and pest accumulation."
+            postedDate="1 day ago"
+            imageUrl="https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg"
+            fullDescriptionPage="/full-description-page"
+          />
+        </div>
       </div>
-    <div className="p-6">
-      <ScientificCultivationCard 
-        mainTitle="Scientific Cultivation Systems"
-        subTopics={subTopics}
-      />
-    </div>
+      <div className="p-6 mb-10 bg-gray-100">
+        <ScientificCultivationCard
+          mainTitle="Scientific Cultivation Systems"
+          subTopics={subTopics}
+        />
+      </div>
+      <div >
+        <AI_GeneratedPastSuggestion />
+      </div>
       <Footer />
     </div>
   );
