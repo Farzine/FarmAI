@@ -7,6 +7,7 @@ import Footer from '../components/Footer';
 import ExpartAdviceCard from '../components/ExpartAdviceCard';
 import ScientificCultivationCard from '../components/ScientificCultivationCard';
 import AI_GeneratedPastSuggestion from '../components/AI_GeneratedPastSuggestion';
+import Carousel from '../components/Carousel';
 
 const App: React.FC = () => {
   const userData = {
@@ -49,6 +50,7 @@ const App: React.FC = () => {
     <div>
       <Navbar />
       <div className="p-4 bg-gray-100 min-h-screen flex items-center justify-center">
+
         <div>
           <ReviewCard
             name={userData.name}
@@ -76,6 +78,9 @@ const App: React.FC = () => {
       </div>
       <div >
         <AI_GeneratedPastSuggestion />
+      </div>
+      <div>
+        <Carousel />
       </div>
       <Footer />
     </div>
