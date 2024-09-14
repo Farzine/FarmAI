@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const adminRoutes = require('./routes/adminRoutes');
 const scientificCultivationMethodsRoutes = require('./routes/scientificCultivationMethodsRoutes');
-// const sponsorRoutes = require('./routes/sponsorRoutes');
+const productRoutes = require('./routes/productRoutes');
 // const importantDateRoutes = require('./routes/importantDateRoutes');
 // const noticeRoutes = require('./routes/noticeRoutes');
 // const messageRoutes = require('./routes/messagesRoutes');
@@ -52,7 +52,7 @@ app.use('/scientificCultivationMethods', scientificCultivationMethodsRoutes);
 // app.use('/important-updates', importantUpdateRoutes);
 // app.use('/schedule',ScheduleRoutes);
 // app.use('/sessionList',sessionListRoutes);
-// app.use('/sponsors', sponsorRoutes);
+app.use('/product', productRoutes);
 
 app.get('/', (req, res) => {
   res.send('Welcome Farm AI');

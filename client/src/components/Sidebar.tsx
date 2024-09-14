@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useRouter, usePathname } from 'next/navigation';
 import Cookies from 'js-cookie';
-import { FaBell, FaImage, FaEnvelope, FaCalendarCheck, FaHandshake } from 'react-icons/fa';
+import { FaBell, FaImage, FaEnvelope, FaCalendarCheck, FaHandshake, FaSellcast } from 'react-icons/fa';
 import { FaMessage, FaNoteSticky, FaPeopleGroup } from 'react-icons/fa6';
 import { RiListCheck, RiTimerLine } from "react-icons/ri";
 import { FiMenu, FiX } from 'react-icons/fi';
@@ -69,17 +69,17 @@ const Sidebar: React.FC = () => {
                 <div className="flex flex-col space-y-1 w-full">
                     <div
                         onClick={() => handleNavigation('/admin/scientificCultivationMethods')}
-                        className={`flex items-center space-x-3 cursor-pointer hover:text-green-600 p-5 rounded ${getActiveClass('/admin/notices')}`}
+                        className={`flex items-center space-x-3 cursor-pointer hover:text-green-600 p-5 rounded ${getActiveClass('/admin/scientificCultivationMethods')}`}
                     >
                         <FaBell className="h-6 w-6" />
                         <span>Scientific Cultivations</span>
                     </div>
                     <div
-                        onClick={() => handleNavigation('/admin/messages')}
-                        className={`flex items-center space-x-3 cursor-pointer hover:text-green-600 p-5 rounded ${getActiveClass('/admin/messages')}`}
+                        onClick={() => handleNavigation('/admin/products')}
+                        className={`flex items-center space-x-3 cursor-pointer hover:text-green-600 p-5 rounded ${getActiveClass('/admin/products')}`}
                     >
-                        <FaMessage className="h-6 w-6" />
-                        <span>Chair Message</span>
+                        <FaSellcast className="h-6 w-6" />
+                        <span>Products</span>
                     </div>
                     <div
                         onClick={() => handleNavigation('/admin/uploadImage')}

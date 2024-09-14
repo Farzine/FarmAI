@@ -5,11 +5,14 @@ import Cookies from 'js-cookie';
 import { useRouter } from 'next/navigation';
 import Image from 'next/image';
 
-const UploadScientificCultivationMethodsPage: React.FC = () => {
-    const [scientificCultivationMethods, setScientificCultivationMethods] = useState<any[]>([]);
+const UploadProductPage: React.FC = () => {
+    const [product, setProduct] = useState<any[]>([]);
     const [file, setFile] = useState<File | null>(null);
     const [description, setDescription] = useState('');
-    const [cropName, setCropName] = useState('');
+    const [productName, setProductName] = useState('');
+    const [productPrice, setProductPrice] = useState('');
+    const [productDiscountPrice, setProductDiscountPrice] = useState('');
+    const [tag, setTag] = useState('');
     const [successMessage, setSuccessMessage] = useState<string | null>(null);
     const [errorMessage, setErrorMessage] = useState<string | null>(null);
     const [loading, setLoading] = useState(false);
@@ -20,13 +23,13 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
       if (!token) router.push('/admin');
 
     useEffect(() => {
-        fetchScientificCultivationMethod();
+        fetchProduct();
     }, []);
 
-    const fetchScientificCultivationMethod = async () => {
+    const fetchProduct = async () => {
         try {
             const token = Cookies.get('token');
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/scientificCultivationMethods`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/product`, {
                 method: 'GET',
                 credentials: 'include',
                 headers: {
@@ -35,16 +38,16 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
             });
             if (response.ok) {
                 const data = await response.json();
-                setScientificCultivationMethods(data);
+                setProduct(data);
             } else {
-                console.error('Error fetching scientific cultivation methods:', response.statusText);
+                console.error('Error fetching product:', response.statusText);
                 if (response.status === 403) {
                     alert('Unauthorized: Please log in again.');
                     router.push('/admin');
                 }
             }
         } catch (error) {
-            console.error('Error fetching scientificCultivationMethods:', error);
+            console.error('Error fetching product:', error);
         }finally {
             setIsLoading(false);
           }
@@ -59,9 +62,17 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
     const handleDescriptionChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setDescription(event.target.value);
     };
-
-    const handleCropNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-        setCropName(event.target.value);
+    const handleProductNameChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setProductName(event.target.value);
+    };
+    const handleProductPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setProductPrice(event.target.value);
+    };
+    const handleProductDiscountPriceChange = (event: React.ChangeEvent<HTMLInputElement>) => {
+        setProductDiscountPrice(event.target.value);
+    };
+    const handleTagChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+        setTag(event.target.value);
     };
 
 
@@ -75,12 +86,15 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
         const formData = new FormData();
         formData.append('image', file);
         formData.append('description', description);
-        formData.append('crop_name', cropName);
+        formData.append('product_name', productName);
+        formData.append('product_price', productPrice);
+        formData.append('product_discount_price', productDiscountPrice);
+        formData.append('tag', tag);
 
         setLoading(true);
 
         try {
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/scientificCultivationMethods/upload`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/product/upload`, {
                 method: 'POST',
                 credentials: 'include',
                 body: formData,
@@ -90,24 +104,27 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
             });
 
             if (response.ok) {
-                fetchScientificCultivationMethod();
+                fetchProduct();
                 setFile(null);
                 setDescription('');
-                setCropName('');
+                setProductName('');
+                setProductPrice('');
+                setProductDiscountPrice('');
+                setTag('');
                 if (fileInputRef.current) {
                     fileInputRef.current.value = '';
                 }
-                setSuccessMessage('Scientific Cultivation Methods uploaded successfully');
+                setSuccessMessage('Product uploaded successfully');
                 setTimeout(() => setSuccessMessage(null), 3000);
             } else {
                 const errorText = await response.text();
-                console.error('Error uploading Scientific Cultivation Methods:', errorText);
-                setErrorMessage('Failed to upload Scientific Cultivation Methods. Please try again.');
+                console.error('Error uploading Product:', errorText);
+                setErrorMessage('Failed to upload Product. Please try again.');
                 setTimeout(() => setErrorMessage(null), 3000);
             }
         } catch (error) {
-            console.error('Error uploading Scientific Cultivation Methods:', error);
-            setErrorMessage('Failed to upload Scientific Cultivation Methods. Please try again.');
+            console.error('Error uploading Product:', error);
+            setErrorMessage('Failed to upload Product. Please try again.');
             setTimeout(() => setErrorMessage(null), 3000);
         } finally {
             setLoading(false);
@@ -119,7 +136,7 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
 
         try {
             const token = Cookies.get('token');
-            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/scientificCultivationMethods/${id}`, {
+            const response = await fetch(`${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/product/${id}`, {
                 method: 'DELETE',
                 credentials: 'include',
                 headers: {
@@ -128,19 +145,19 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
             });
 
             if (response.ok) {
-                fetchScientificCultivationMethod();
-                setSuccessMessage('Scientific Cultivation Methods deleted successfully');
+                fetchProduct();
+                setSuccessMessage('Product deleted successfully');
                 setTimeout(() => setSuccessMessage(null), 3000);
             } else {
-                console.error('Error deleting Scientific Cultivation Methods:', response.statusText);
+                console.error('Error deleting Product:', response.statusText);
                 if (response.status === 403) {
                     alert('Unauthorized: Please log in again.');
                     router.push('/admin');
                 }
             }
         } catch (error) {
-            console.error('Error deleting scientificCultivationMethods:', error);
-            setErrorMessage('Failed to delete Scientific Cultivation Methods. Please try again.');
+            console.error('Error deleting Product:', error);
+            setErrorMessage('Failed to delete Product. Please try again.');
             setTimeout(() => setErrorMessage(null), 3000);
         } finally {
             setLoading(false);
@@ -164,14 +181,21 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
                 </div>
             )}
             <div className={`flex-1 p-4 md:p-8 overflow-y-auto bg-gray-100 h-screen ${loading ? 'filter blur-sm' : ''}`}>
-                <h1 className="text-3xl font-bold mb-4">Scientific Cultivation Methods</h1>
+                <h1 className="text-3xl font-bold mb-4">Product Management</h1>
 
-                {scientificCultivationMethods.length === 0 && <p>No methods found</p>}
+                {product.length === 0 && <p>No product found</p>}
                 <form onSubmit={handleSubmit} className="flex flex-col space-y-4 mb-8 w-full md:w-1/3">
                     <input
                         type="file"
                         ref={fileInputRef}
                         onChange={handleFileChange}
+                        className="border p-2"
+                    />
+                    <input
+                        type="text"
+                        value={productName}
+                        onChange={handleProductNameChange}
+                        placeholder="Enter Product Name"
                         className="border p-2"
                     />
                     <input
@@ -182,12 +206,32 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
                         className="border p-2"
                     />
                     <input
-                        type='text'
-                        value={cropName}
-                        onChange={handleCropNameChange}
-                        placeholder='Enter Crop Name'
+                        type="text"
+                        value={productPrice}
+                        onChange={handleProductPriceChange}
+                        placeholder="Enter Product Price"
                         className="border p-2"
                     />
+                    <input
+                        type="text"
+                        value={productDiscountPrice}
+                        onChange={handleProductDiscountPriceChange}
+                        placeholder="Enter Product Discount Price"
+                        className="border p-2"
+                    />
+                    <select
+                        value={tag}
+                        onChange={handleTagChange}
+                        className="border p-2"
+                    >
+                        <option value="">Select Tag</option>
+                        <option value="seeds">Seeds</option>
+                        <option value="insecticide">Insecticide</option>
+                        <option value="fertilizer">Fertilizer</option>
+                        <option value="sapling">Sapling</option>
+                        <option value="tools">Tools</option>
+                        <option value="other">Other</option>
+                    </select>
                     <button
                         type="submit"
                         className="bg-green-600 text-white py-2 px-4 rounded hover:bg-green-700 w-full md:w-40"
@@ -213,17 +257,23 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
                 )}
 
                 <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-                    {scientificCultivationMethods.map((crop: any) => (
-                        <div key={crop._id} className="flex justify-between items-center border p-4 rounded shadow-lg bg-[#eaefef]">
+                    {product.map((product: any) => (
+                        <div key={product._id} className="flex justify-between items-center border p-4 rounded shadow-lg bg-[#eaefef]">
                             <div style={{ flex: 1 }}>
                                 <p className="mb-2 text-gray-700" style={{ maxWidth: '100%', overflow: 'hidden', textOverflow: 'ellipsis', whiteSpace: 'nowrap' }}>
-                                    {truncateText(crop.description, 30)}
+                                    {truncateText(product.description, 30)}
                                 </p>
                                 <p className="mb-2 text-gray-700">
-                                    <strong>Crop:</strong> {crop.crop_name}
+                                    <strong>Name:</strong> {product.product_name}
+                                </p>
+                                <p className="mb-2 text-gray-700">
+                                    <strong>Price:</strong> {product.product_price}
+                                </p>
+                                <p className="mb-2 text-gray-700">
+                                    <strong>Discount Price:</strong> {product.product_discount_price}
                                 </p>
                                 <button
-                                    onClick={() => handleDelete(crop._id)}
+                                    onClick={() => handleDelete(product._id)}
                                     className="mt-2 px-2 py-1 border border-red-500 text-red-500 rounded hover:bg-red-500 hover:text-white transition-colors duration-200"
                                     style={{ fontSize: '0.75rem' }}
                                     disabled={loading}
@@ -231,7 +281,7 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
                                     {loading ? 'Deleting...' : 'Delete'}
                                 </button>
                             </div>
-                            <Image src={crop.path} alt={crop.description} className="w-32 h-24 object-cover rounded ml-4" width={100} height={100} />
+                            <Image src={product.path} alt={product.description} className="w-32 h-24 object-cover rounded ml-4" width={100} height={100} />
                         </div>
                     ))}
                     {isLoading && <div>Loading...</div>}
@@ -241,4 +291,4 @@ const UploadScientificCultivationMethodsPage: React.FC = () => {
     );
 };
 
-export default UploadScientificCultivationMethodsPage;
+export default UploadProductPage;
