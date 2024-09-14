@@ -5,8 +5,8 @@ const multer = require('multer');
 const cors = require('cors'); 
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
-// const adminRoutes = require('./routes/adminRoutes');
-// const imageRoutes = require('./routes/imageRoutes');
+const adminRoutes = require('./routes/adminRoutes');
+const scientificCultivationMethodsRoutes = require('./routes/scientificCultivationMethodsRoutes');
 // const sponsorRoutes = require('./routes/sponsorRoutes');
 // const importantDateRoutes = require('./routes/importantDateRoutes');
 // const noticeRoutes = require('./routes/noticeRoutes');
@@ -19,7 +19,7 @@ const cookieParser = require('cookie-parser');
 const frontUrl = process.env.NEXT_PUBLIC_APP_FRONTEND_URL;
 
 const { MONGO_URI } = require('./config/config');
-// const { initializeAdmin } = require('./models/admin');
+const { initializeAdmin } = require('./models/admin');
 // const regRouter = require('./routes/registration');
 
 const corsOptions ={
@@ -41,8 +41,8 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// app.use('/admin', adminRoutes);
-// app.use('/images', imageRoutes);
+app.use('/admin', adminRoutes);
+app.use('/scientificCultivationMethods', scientificCultivationMethodsRoutes);
 // app.use('/important-dates', importantDateRoutes);
 // app.use('/notices', noticeRoutes);
 // app.use('/messages', messageRoutes);
@@ -61,7 +61,7 @@ app.get('/', (req, res) => {
 mongoose.connect(MONGO_URI)
   .then(async () => {
     console.log('Connected to MongoDB');
-    // await initializeAdmin(); 
+    await initializeAdmin(); 
     app.listen(PORT, () => {
       console.log(`Server running on http://localhost:${PORT}`);
     });
