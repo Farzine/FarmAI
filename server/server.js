@@ -8,6 +8,7 @@ const cookieParser = require('cookie-parser');
 const adminRoutes = require('./routes/adminRoutes');
 const scientificCultivationMethodsRoutes = require('./routes/scientificCultivationMethodsRoutes');
 const productRoutes = require('./routes/productRoutes');
+const userRoutes = require('./routes/userRoutes');
 // const importantDateRoutes = require('./routes/importantDateRoutes');
 // const noticeRoutes = require('./routes/noticeRoutes');
 // const messageRoutes = require('./routes/messagesRoutes');
@@ -41,6 +42,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
+
 app.use('/admin', adminRoutes);
 app.use('/scientificCultivationMethods', scientificCultivationMethodsRoutes);
 // app.use('/important-dates', importantDateRoutes);
@@ -51,7 +53,7 @@ app.use('/scientificCultivationMethods', scientificCultivationMethodsRoutes);
 // app.use('/registration',regRouter);
 // app.use('/important-updates', importantUpdateRoutes);
 // app.use('/schedule',ScheduleRoutes);
-// app.use('/sessionList',sessionListRoutes);
+app.use('/user',userRoutes);
 app.use('/product', productRoutes);
 
 app.get('/', (req, res) => {
