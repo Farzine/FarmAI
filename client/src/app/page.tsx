@@ -8,6 +8,7 @@ import ExpartAdviceCard from '../components/ExpartAdviceCard';
 import ScientificCultivationCard from '../components/ScientificCultivationCard';
 import AI_GeneratedPastSuggestion from '../components/AI_GeneratedPastSuggestion';
 import Carousel from '../components/Carousel';
+import OtpVerification from '@/components/inputOTP';
 
 const App: React.FC = () => {
   const userData = {
@@ -50,7 +51,9 @@ const App: React.FC = () => {
     <div>
       <Navbar />
       <div className="p-4 bg-gray-100 min-h-screen flex items-center justify-center">
-
+        <div>
+          <OtpVerification email={"farzine07@student.sust.edu"} />
+        </div>
         <div>
           <ReviewCard
             name={userData.name}

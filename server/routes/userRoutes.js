@@ -1,11 +1,12 @@
 const express = require('express');
 const { registerUser, verifyOTP, loginUser, updateUser, forgotPassword, resetPassword } = require('../controllers/userController');
 const authenticateToken = require('../middlewares/authMiddleware');
-
+const multer = require('multer');
+const upload = multer({ dest: 'uploads/' });
 const router = express.Router();
 
 // Register new user (Step 1: Send OTP)
-router.post('/register', registerUser);
+router.post('/register',upload.single('profilePicture'), registerUser);
 
 // Verify OTP and complete registration (Step 2)
 router.post('/verify-otp', verifyOTP);

@@ -2,13 +2,18 @@ const User = require('../models/user');
 const jwt = require('jsonwebtoken');
 const bcrypt = require('bcrypt');
 const nodemailer = require('nodemailer');
-const cloudinary = require('../config/cloudinary'); // Assuming Cloudinary is set up
-const otpStore = {}; // Temporary store for OTP
+const cloudinary = require('../config/cloudinary'); 
+const multer = require('multer');
+const path = require('path');
+const fs = require('fs');
+const otpStore = {}; 
+
+
 
 // Helper function to send OTP via email
 const sendOTP = (email, otp) => {
   const transporter = nodemailer.createTransport({
-  host: 'smtp-relay.brevo.com', // Correct Sendinblue SMTP host
+  host: 'smtp-relay.brevo.com',
   port: 587,
   secure: false,
     auth: {
@@ -29,17 +34,24 @@ const sendOTP = (email, otp) => {
 
 // Register user - step 1 (send OTP)
 exports.registerUser = async (req, res) => {
-  const { name, email, phone, profilePicture, password, confirmPassword, address } = req.body;
+  const { name, email, phone, password, address } = req.body;
+  const profilePicture = req.file ? req.file.path : null;
 
-  if (password !== confirmPassword) {
-    return res.status(400).json({ message: 'Passwords do not match' });
-  }
-
-  // Generate and send OTP
-  const otp = Math.floor(100000 + Math.random() * 900000).toString();
-  otpStore[email] = { otp, data: { name, email, phone, profilePicture, password, address }, expiration: Date.now() + 10 * 60 * 1000 };
-
+  
   try {
+    // Check if email already exists in the database
+    const existingUser = await User.findOne({ email });
+    if (existingUser) {
+      return res.status(400).json({ message: 'Email already exists' });
+    }
+
+
+
+    // Generate OTP and store it
+    const otp = Math.floor(100000 + Math.random() * 900000).toString();
+    otpStore[email] = { otp, data: { name, email, phone, profilePicture, password, address }, expiration: Date.now() + 10 * 60 * 1000 };
+
+    // Send OTP
     await sendOTP(email, otp);
     res.status(200).json({ message: 'OTP sent to email. Please verify your account.' });
   } catch (error) {
@@ -49,7 +61,7 @@ exports.registerUser = async (req, res) => {
 
 // Verify OTP and create account - step 2
 exports.verifyOTP = async (req, res) => {
-  const { email, otp, profilePicture } = req.body;
+  const { email, otp } = req.body;
   const storedOTP = otpStore[email];
 
   if (!storedOTP || storedOTP.otp !== otp || Date.now() > storedOTP.expiration) {
@@ -59,26 +71,39 @@ exports.verifyOTP = async (req, res) => {
   try {
     // Upload profile picture to Cloudinary (if provided)
     let cloudinaryUrl = '';
-    if (profilePicture) {
-      const uploadResult = await cloudinary.uploader.upload(profilePicture, {
-        folder: 'FarmAI',
-        format: 'webp',  // Save as .webp
-      });
-      cloudinaryUrl = uploadResult.secure_url;
+    if (storedOTP.data.profilePicture) {
+      try {
+        const filePath = storedOTP.data.profilePicture;
+        const uploadResult = await cloudinary.uploader.upload(filePath, {
+          folder: 'FarmAIuserProfile',
+          format: 'webp', 
+        });
+        cloudinaryUrl = uploadResult.secure_url;
+
+        // Remove the file from local uploads folder after upload
+        fs.unlinkSync(filePath);
+      } catch (uploadError) {
+        console.error(uploadError);
+        return res.status(500).json({ message: 'Error uploading profile picture', error: uploadError });
+      }
     }
 
-    const { name, email, phone, password, address } = storedOTP.data;
+    const { name, phone, password, address } = storedOTP.data;
 
     // Save user data to database after OTP verification
     const user = new User({ name, email, phone, profilePicture: cloudinaryUrl, password, address });
     await user.save();
 
-    delete otpStore[email];  // Clear OTP after successful registration
-    res.status(201).json({ message: 'Account created successfully!' });
+    // Clear OTP from the store after successful registration
+    delete otpStore[email];
+
+    res.status(201).json({success: true, message: 'Account created successfully!' });
   } catch (error) {
-    res.status(500).json({ message: 'Error creating account', error });
+    console.log(error);
+    res.status(500).json({success: false, message: 'Error creating account', error });
   }
 };
+
 
 // Login user
 exports.loginUser = async (req, res) => {
