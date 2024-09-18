@@ -8,9 +8,29 @@ import ExpartAdviceCard from '../components/ExpartAdviceCard';
 import ScientificCultivationCard from '../components/ScientificCultivationCard';
 import AI_GeneratedPastSuggestion from '../components/AI_GeneratedPastSuggestion';
 import Carousel from '../components/Carousel';
-import OtpVerification from '@/components/inputOTP';
+import { useEffect, useState } from 'react';
+import { useRouter } from 'next/navigation';
+
 
 const App: React.FC = () => {
+  const router = useRouter();
+  const [loginMessage, setLoginMessage] = useState('');
+
+  useEffect(() => {
+    const searchParams = new URLSearchParams(window.location.search);
+    const loginStatus = searchParams.get('login');
+    if (loginStatus === 'success') {
+      setLoginMessage('Google login successful!');
+      // Redirect to the home page or dashboard after a short delay
+      setTimeout(() => {
+        router.push('/'); // You can push to the dashboard or home page
+      }, 2000);
+    } else if (loginStatus === 'failed') {
+      router.push('/login');
+      setLoginMessage('Google login failed. Please try again.');
+    }
+  }, []);
+
   const userData = {
     name: 'John Doe',
     profilePic: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg ', // Replace with actual path or URL
@@ -52,7 +72,7 @@ const App: React.FC = () => {
       <Navbar />
       <div className="p-4 bg-gray-100 min-h-screen flex items-center justify-center">
         <div>
-          <OtpVerification email={"farzine07@student.sust.edu"} />
+          
         </div>
         <div>
           <ReviewCard

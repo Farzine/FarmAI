@@ -6,7 +6,75 @@ const cloudinary = require('../config/cloudinary');
 const multer = require('multer');
 const path = require('path');
 const fs = require('fs');
+const passport = require('passport');
+const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const otpStore = {}; 
+
+
+
+// google auth
+passport.use(new GoogleStrategy({
+  clientID: process.env.GOOGLE_CLIENT_ID,
+  clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+  callbackURL: `${process.env.NEXT_PUBLIC_APP_FRONTEND_URL}/auth/google/callback`, // This is the redirect URL after Google authentication
+},
+  async (accessToken, refreshToken, profile, done) => {
+    try {
+      // Check if the user already exists in your database
+      let user = await User.findOne({ email: profile.emails[0].value });
+
+      if (!user) {
+        // If user doesn't exist, create a new user
+        user = new User({
+          name: profile.displayName,
+          email: profile.emails[0].value,
+          profilePicture: profile.photos[0].value,
+          password: '', // No password since we're using Google login
+          address: '', // Optional: Set default value if needed
+        });
+
+        await user.save();
+      }
+
+      // Return the user
+      return done(null, user);
+    } catch (err) {
+      return done(err, false);
+    }
+  }
+));
+
+// Serialize user information into session
+passport.serializeUser((user, done) => {
+  done(null, user.id);
+});
+
+// Deserialize user information from session
+passport.deserializeUser(async (id, done) => {
+  try {
+    const user = await User.findById(id);
+    done(null, user);
+  } catch (err) {
+    done(err, null);
+  }
+});
+
+// Controller function to handle successful login
+exports.loginSuccess = (req, res) => {
+  res.status(200).json({
+    success: true,
+    message: 'Login successful',
+    user: req.user,
+  });
+};
+
+// Controller function to handle failed login
+exports.loginFailure = (req, res) => {
+  res.status(401).json({
+    success: false,
+    message: 'Login failed',
+  });
+};
 
 
 

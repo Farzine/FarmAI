@@ -17,7 +17,7 @@ export default function SignUp() {
         phone: string;
         address: string;
         password: string;
-        profilePicture: File | null; // Allow null as a valid value
+        profilePicture: File | null;
     }
 
     const [formData, setFormData] = useState<FormData>({
@@ -70,6 +70,10 @@ export default function SignUp() {
                 setMessage("Error during registration.");
             }
         }
+    };
+
+    const handleGoogleSignUp = () => {
+        window.location.href = `${process.env.NEXT_PUBLIC_APP_BACKEND_URL}/user/auth/google`;
     };
 
     return (
@@ -209,6 +213,7 @@ export default function SignUp() {
                             <button
                                 type="button"
                                 className="relative inline-flex w-full items-center justify-center rounded-md border border-gray-400 bg-white px-3.5 py-2.5 font-semibold text-gray-700 transition-all duration-200 hover:bg-gray-100 hover:text-black focus:bg-gray-100 focus:text-black focus:outline-none"
+                                onClick={handleGoogleSignUp}
                             >
                                 <span className="mr-2 inline-block">
                                     <Image src="/google.png" alt="Google" width={20} height={20} />
