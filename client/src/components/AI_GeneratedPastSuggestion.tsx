@@ -11,49 +11,49 @@ interface Suggestion {
 const suggestions: Suggestion[] = [
   {
     id: 1,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Blight Disease',
     description: 'Yellowing leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.Yellowing leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.',
   },
   {
     id: 2,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Powdery Mildew',
     description: 'White powdery spots on leaves.Yellowing leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.',
   },
   {
     id: 3,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Root Rot',
     description: 'Brown, mushy roots leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.',
   },
   {
     id: 4,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Aphid Infestation',
     description: 'Sticky residue on leaves.Yellowing leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.'
   },
   {
     id: 5,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Aphid Infestation',
     description: 'Sticky residue on leaves.Yellowing leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.'
   },
   {
     id: 6,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Aphid Infestation',
     description: 'Sticky residue on leaves.Yellowing leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.'
   },
   {
     id: 7,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Aphid Infestation',
     description: 'Sticky residue on leaves.Yellowing leaves with dark spots.Vertical farming is the practice of growing crops in vertically stacked layers.'
   },
   {
     id: 8,
-    image: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    image: '/images.jpeg',
     title: 'Aphid Infestation',
     description: 'Sticky residue on leaves.Yellowing leaves with dark spots.Vertical farming is the practice of growing crops in vertically stacked layers.'
   },

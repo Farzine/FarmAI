@@ -19,7 +19,7 @@ const Navbar = () => {
             height={64}
             className="cursor-pointer"
           />
-          <span className="ml-3 font-bold text-xl text-green-600">FarmAI</span>
+          <span className=" mt-2 font-bold text-xl text-green-600">FarmAI</span>
         </div>
         <div className="hidden sm:flex flex-grow justify-center mt-2.5">
           <ul className="flex space-x-4">
