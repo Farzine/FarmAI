@@ -30,32 +30,29 @@ router.post('/reset-password', resetPassword);
 router.get('/auth/google', passport.authenticate('google', { scope: ['profile', 'email'] }));
 
 // Route to handle callback from Google OAuth
-router.get('/auth/google/callback',
-  passport.authenticate('google', { failureRedirect: '/auth/failure' }),
-  (req, res) => {
-    // On success, redirect to the success route
-    res.redirect(`${process.env.NEXT_PUBLIC_APP_FRONTEND_URL}/auth/success`);
-  }
-);
+router.get( '/auth/google/callback', 
+	passport.authenticate( 'google', { 
+		successRedirect: '/auth/success', 
+		failureRedirect: '/auth/failure'
+}));
+// router.get('/auth/google/callback',
+//   passport.authenticate('google', { 
+//     failureRedirect: '/auth/failure' 
+//   }),
+//   (req, res) => {
+//     console.log('Google callback hit');
+//     try{
 
-// Route for login failure (handled by the controller)
-router.get('/auth/failure', (req, res) => {
-    // Redirect to the frontend with failure information
-    res.redirect(`${process.env.NEXT_PUBLIC_APP_FRONTEND_URL}/signUp?login=failed`);
-});
+//       res.redirect('/');
+//     } catch (error) {
+//       console.error('Error during redirect:', error);
+//       res.status(500).send('Server Error');
+//     }
+//   }
+// );
 
-// Route for login success (controller handles the response)
-router.get('/auth/success', (req, res) => {
-    if (req.isAuthenticated()) {
-      // Use the controller function to respond with success
-      return loginSuccess(req, res);
-    } else {
-      // If the user is not authenticated, redirect to failure
-      return res.redirect('/auth/failure');
-    }
-  });
-  
-  // Route for login failure (controller handles the response)
+
+  router.get('/auth/success', loginSuccess);
   router.get('/auth/failure', loginFailure);
 
 module.exports = router;
