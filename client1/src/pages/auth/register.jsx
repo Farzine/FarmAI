@@ -41,6 +41,8 @@ function AuthRegister() {
           toast({
             title: data?.payload?.message,
           });
+          console.log(data);
+          console.log(emailToSend);
           setEmailToSend(emailToSend );
           setOTPModalOpen(true);
         } else {
@@ -54,7 +56,6 @@ function AuthRegister() {
       })
       .catch((error) => {
         setIsLoading(false);
-        console.error("Registration error:", error);
         toast({
           title: "An error occurred during registration.",
           variant: "destructive",
@@ -76,10 +77,6 @@ function AuthRegister() {
     setOTPModalOpen(false);
   };
   
-  // Temporary button to toggle modal
-  const toggleModal = () => {
-    setOTPModalOpen((prev) => !prev);
-  };
 
   return (
     <div className="mx-auto w-full max-w-md space-y-6">
@@ -97,24 +94,22 @@ function AuthRegister() {
           </Link>
         </p>
       </div>
+      {console.log("FromData:",formData)}
       <CommonForm
         formControls={registerFormControls}
-        buttonText={isLoading ? "Loading..." : "Sign Up"} // Show loading in button
+        buttonText={isLoading ? "Loading..." : "Sign Up"} 
         formData={formData}
         setFormData={setFormData}
         onSubmit={onSubmit}
       />
-      {/* {console.log(setEmailToSend)} */}
       {isOTPModalOpen && (
+        console.log("OTP email:",email),
         <OTPModal
           email={email}
           onSuccess={handleOTPSuccess}
           onFailure={handleOTPFailure}
         />
       )}
-      
-       {/* Temporary button for testing modal state */}
-       <button onClick={toggleModal}>Toggle OTP Modal</button>
     </div>
   );
 }

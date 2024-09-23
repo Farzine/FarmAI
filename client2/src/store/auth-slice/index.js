@@ -11,17 +11,14 @@ export const registerUser = createAsyncThunk(
   "/auth/register",
 
   async (formData) => {
-
     const response = await axios.post(
       `${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/register`,
       formData,
       {
         withCredentials: true,
-        headers: {
-          'Content-Type': 'multipart/form-data',  // Important for file uploads
-        },
       }
     );
+
     return response.data;
   }
 );
@@ -77,61 +74,6 @@ export const checkAuth = createAsyncThunk(
   }
 );
 
-
-export const verifyOTP = createAsyncThunk(
-  "/auth/verify-otp",
-
-  async ({ email, otp })  => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/verify-otp`,
-      ({ email, otp }) ,
-      {
-        withCredentials: true,
-      }
-    );
-
-    return response.data;
-  }
-);
-
-
-// For forgot password
-export const forgotPassword = createAsyncThunk(
-  "/auth/forgot-password",
-
-  async (formData) => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/forgot-password`,
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
-
-    return response.data;
-  }
-);
-
-
-// For reset password
-export const resetPassword = createAsyncThunk(
-  "/auth/reset-password",
-
-  async (formData) => {
-    const response = await axios.post(
-      `${import.meta.env.VITE_APP_BACKEND_URL}/api/auth/reset-password`,
-      formData,
-      {
-        withCredentials: true,
-      }
-    );
-
-    return response.data;
-  }
-);
-
-
-
 const authSlice = createSlice({
   name: "auth",
   initialState,
@@ -168,37 +110,6 @@ const authSlice = createSlice({
         state.user = null;
         state.isAuthenticated = false;
       })
-      .addCase(verifyOTP.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(verifyOTP.fulfilled, (state, action) => {
-        state.isLoading = false;
-        state.user = action.payload.success ? action.payload.user : null;
-        state.isAuthenticated = action.payload.success;
-      })
-      .addCase(verifyOTP.rejected, (state) => {
-        state.isLoading = false;
-        state.user = null;
-        state.isAuthenticated = false;
-      })
-      .addCase(forgotPassword.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(forgotPassword.fulfilled, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(forgotPassword.rejected, (state) => {
-        state.isLoading = false;
-      })
-      .addCase(resetPassword.pending, (state) => {
-        state.isLoading = true;
-      })
-      .addCase(resetPassword.fulfilled, (state, action) => {
-        state.isLoading = false;
-      })
-      .addCase(resetPassword.rejected, (state) => {
-        state.isLoading = false;
-      })
       .addCase(checkAuth.pending, (state) => {
         state.isLoading = true;
       })
@@ -216,7 +127,7 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = null;
         state.isAuthenticated = false;
-      })
+      });
   },
 });
 

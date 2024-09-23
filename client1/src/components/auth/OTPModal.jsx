@@ -6,7 +6,6 @@ import { verifyOTP } from "@/store/auth-slice";
 import { useToast } from "@/components/ui/use-toast";
 
 const OTPModal = ({ email, onSuccess, onFailure }) => {
-    console.log("Email passed to OTPModal:", email);
   const [otp, setOtp] = useState("");
   const [timeLeft, setTimeLeft] = useState(600); // 10 minutes in seconds
   const [isVerifying, setIsVerifying] = useState(false);
