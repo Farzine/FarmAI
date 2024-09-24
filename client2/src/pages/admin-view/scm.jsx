@@ -1,8 +1,15 @@
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { Button } from "@/components/ui/button";
-import { addScmEntry, getScmEntries as getScmEntry, deleteScmEntry, editScmEntry } from "@/store/common-slice";
+import {
+  addScmEntry,
+  getScmEntries as getScmEntry,
+  deleteScmEntry,
+  editScmEntry,
+} from "@/store/common-slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import { useToast } from "@/components/ui/use-toast";
+import ScmTile from "../../components/admin-view/scm-tile"; // Import the reusable ScmTile component
 
 function ScientificCultivationPage() {
   const [imageFile, setImageFile] = useState(null);
@@ -10,26 +17,59 @@ function ScientificCultivationPage() {
   const [imageLoadingState, setImageLoadingState] = useState(false);
   const [cropName, setCropName] = useState("");
   const [description, setDescription] = useState("");
+  const [editId, setEditId] = useState(null); // Track if we are editing an entry
   const dispatch = useDispatch();
   const { scmList } = useSelector((state) => state.commonFeature);
+  const { toast } = useToast(); // Toast hook
 
   function handleUploadScmEntry() {
-    const newScmEntry = {
-      path: uploadedImageUrl,
-      public_id: imageFile?.public_id || "",
-      description,
-      crop_name: cropName,
-    };
+    const formData = new FormData();
 
-    dispatch(addScmEntry(newScmEntry)).then((data) => {
+    if (imageFile) {
+      formData.append("image", imageFile); // Append the file only if it's present
+    }
+    formData.append("description", description);
+    formData.append("crop_name", cropName);
+
+    const action = editId
+      ? editScmEntry({ id: editId, formData }) // Send formData for editing
+      : addScmEntry({ image: imageFile, description, crop_name: cropName });
+
+    dispatch(action).then((data) => {
       if (data?.payload?.success) {
         dispatch(getScmEntry());
         setImageFile(null);
         setUploadedImageUrl("");
         setCropName("");
         setDescription("");
+        setEditId(null); // Reset the edit state after success
+        toast({
+          title:
+            data?.payload?.message ||
+            (editId ? "Entry updated successfully" : "Entry added successfully"),
+          variant: "default",
+        });
       }
     });
+  }
+
+  function handleDelete(id) {
+    dispatch(deleteScmEntry(id)).then((data) => {
+      if (data?.payload?.success) {
+        toast({
+          title: data?.payload?.message || "Entry deleted successfully",
+          variant: "destructive",
+        });
+        dispatch(getScmEntry());
+      }
+    });
+  }
+
+  function handleEdit(scmItem) {
+    setCropName(scmItem.crop_name);
+    setDescription(scmItem.description);
+    setUploadedImageUrl(scmItem.path); // Show the current image
+    setEditId(scmItem._id); // Set the edit ID
   }
 
   useEffect(() => {
@@ -61,24 +101,22 @@ function ScientificCultivationPage() {
         className="mt-3 w-full p-2 border border-gray-300 rounded"
       />
       <Button onClick={handleUploadScmEntry} className="mt-5 w-full">
-        Upload
+        {editId ? "Update Entry" : "Upload"}
       </Button>
-      <div className="flex flex-col gap-4 mt-5">
-        {scmList && scmList.length > 0
-          ? scmList.map((scmItem) => (
-              <div className="relative" key={scmItem._id}>
-                <img
-                  src={scmItem.path}
-                  alt={scmItem.crop_name}
-                  className="w-full h-full object-cover rounded-t-lg"
-                />
-                <div className="p-2 bg-white rounded-b-lg">
-                  <h3 className="text-lg font-semibold">{scmItem.crop_name}</h3>
-                  <p className="text-sm text-gray-600">{scmItem.description}</p>
-                </div>
-              </div>
-            ))
-          : <p>No SCM entries available</p>}
+
+      <div className="flex flex-row gap-4 mt-5">
+        {scmList && scmList.length > 0 ? (
+          scmList.map((scmItem) => (
+            <ScmTile
+              key={scmItem._id}
+              scmItem={scmItem}
+              handleEdit={handleEdit}
+              handleDelete={handleDelete}
+            />
+          ))
+        ) : (
+          <p>No SCM entries available</p>
+        )}
       </div>
     </div>
   );

@@ -1,18 +1,21 @@
 const cloudinary = require('../../config/cloudinary');
 const ScientificCultivationMethods = require('../../models/ScientificCultivationMethods');
+const { imageUploadUtil } = require("../../helpers/cloudinary");
 
 exports.uploadScientificCultivationMethods = async (req, res) => {
     try {
       const file = req.file;
       const { description, crop_name } = req.body;
+
+      console.log(req.body, file);
   
-      if (!file) {
+      if (!file && !req.body.image) {
         return res.status(400).json({ message: 'No scientific cultivation methods uploaded', success: false });
       }
   
       const scientificCultivationMethods = new ScientificCultivationMethods({
-        path: file.path,
-        public_id: file.filename,
+        path: file ? file.path : req.body.image,
+        public_id: file ? file.filename : null,
         description,
         crop_name,
       });
@@ -60,7 +63,7 @@ exports.uploadScientificCultivationMethods = async (req, res) => {
   exports.editScientificCultivationMethods = async (req, res) => {
     try {
       const { id } = req.params;
-      const { description, crop_name } = req.body;
+      const { description, crop_name, image } = req.body;
       const file = req.file;
   
       const scientificCultivationMethods = await ScientificCultivationMethods.findById(id);
@@ -78,6 +81,8 @@ exports.uploadScientificCultivationMethods = async (req, res) => {
   
         scientificCultivationMethods.path = file.path;
         scientificCultivationMethods.public_id = file.filename;
+      }else if(image){
+        scientificCultivationMethods.path = image;
       }
   
       await scientificCultivationMethods.save();
