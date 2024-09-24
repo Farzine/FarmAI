@@ -58,11 +58,11 @@ export const addProductFormElements = [
     name: "category",
     componentType: "select",
     options: [
-      { id: "men", label: "Men" },
-      { id: "women", label: "Women" },
-      { id: "kids", label: "Kids" },
-      { id: "accessories", label: "Accessories" },
-      { id: "footwear", label: "Footwear" },
+      { id: "seed", label: "Seeds" },
+      { id: "farmtools", label: "Farm Tools" },
+      { id: "fertilizer", label: "Fertilizer" },
+      { id: "pestisides", label: "Pestisides" },
+      { id: "others", label: "Others" },
     ],
   },
   {
@@ -70,12 +70,12 @@ export const addProductFormElements = [
     name: "brand",
     componentType: "select",
     options: [
-      { id: "nike", label: "Nike" },
-      { id: "adidas", label: "Adidas" },
-      { id: "puma", label: "Puma" },
-      { id: "levi", label: "Levi's" },
-      { id: "zara", label: "Zara" },
-      { id: "h&m", label: "H&M" },
+      { id: "agrobangla", label: "Agro Bangla" },
+      { id: "agritech", label: "Agri Tech" },
+      { id: "aci", label: "ACI" },
+      { id: "famai", label: "Farm AI" },
+      { id: "farmy", label: "FarmY" },
+      { id: "unknown", label: "Unknown" },
     ],
   },
   {
@@ -104,7 +104,7 @@ export const addProductFormElements = [
 export const shoppingViewHeaderMenuItems = [
   {
     id: "home",
-    label: "Home",
+    label: "Marketplace",
     path: "/shop/home",
   },
   {
@@ -113,28 +113,28 @@ export const shoppingViewHeaderMenuItems = [
     path: "/shop/listing",
   },
   {
-    id: "men",
-    label: "Men",
+    id: "seed",
+    label: "Seeds",
     path: "/shop/listing",
   },
   {
-    id: "women",
-    label: "Women",
+    id: "farmtools",
+    label: "Farm Tools",
     path: "/shop/listing",
   },
   {
-    id: "kids",
-    label: "Kids",
+    id: "fertilizer",
+    label: "Fertilizer",
     path: "/shop/listing",
   },
   {
-    id: "footwear",
-    label: "Footwear",
+    id: "pestisides",
+    label: "Pestisides",
     path: "/shop/listing",
   },
   {
-    id: "accessories",
-    label: "Accessories",
+    id: "others",
+    label: "Others",
     path: "/shop/listing",
   },
   {
@@ -145,37 +145,37 @@ export const shoppingViewHeaderMenuItems = [
 ];
 
 export const categoryOptionsMap = {
-  men: "Men",
-  women: "Women",
-  kids: "Kids",
-  accessories: "Accessories",
-  footwear: "Footwear",
+  seed: "Seeds",
+  farmtools: "Farm Tools",
+  fertilizer: "Fertilizer",
+  pestisides: "Pestisides",
+  others: "Others",
 };
 
 export const brandOptionsMap = {
-  nike: "Nike",
-  adidas: "Adidas",
-  puma: "Puma",
-  levi: "Levi",
-  zara: "Zara",
-  "h&m": "H&M",
+  agrobangla: "Agro Bangla",
+  agritech: "Agri Tech",
+  aci: "ACI",
+  famai: "Farm AI",
+  farmy: "FarmY",
+  unknown: "Unknown",
 };
 
 export const filterOptions = {
   category: [
-    { id: "men", label: "Men" },
-    { id: "women", label: "Women" },
-    { id: "kids", label: "Kids" },
-    { id: "accessories", label: "Accessories" },
-    { id: "footwear", label: "Footwear" },
+    { id: "seed", label: "Seeds" },
+    { id: "farmtools", label: "Farm Tools" },
+    { id: "fertilizer", label: "Fertilizer" },
+    { id: "pestisides", label: "Pestisides" },
+    { id: "others", label: "Others" },
   ],
   brand: [
-    { id: "nike", label: "Nike" },
-    { id: "adidas", label: "Adidas" },
-    { id: "puma", label: "Puma" },
-    { id: "levi", label: "Levi's" },
-    { id: "zara", label: "Zara" },
-    { id: "h&m", label: "H&M" },
+    { id: "agrobangla", label: "Agro Bangla" },
+      { id: "agritech", label: "Agri Tech" },
+      { id: "aci", label: "ACI" },
+      { id: "famai", label: "Farm AI" },
+      { id: "farmy", label: "FarmY" },
+      { id: "unknown", label: "Unknown" },
   ],
 };
 

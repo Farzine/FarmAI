@@ -17,7 +17,7 @@ function StarRatingComponent({ rating, handleRatingChange }) {
     >
       <StarIcon
         className={`w-6 h-6 ${
-          star <= rating ? "fill-yellow-500" : "fill-black"
+          star <= rating ? "fill-green-500" : "fill-black"
         }`}
       />
     </Button>
