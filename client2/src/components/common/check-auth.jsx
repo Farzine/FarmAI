@@ -12,7 +12,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
       if (user?.role === "admin") {
         return <Navigate to="/admin/dashboard" />;
       } else {
-        return <Navigate to="/shop/home" />;
+        return <Navigate to="/farmAI/home" />;
       }
     }
   }
@@ -35,7 +35,7 @@ function CheckAuth({ isAuthenticated, user, children }) {
     if (user?.role === "admin") {
       return <Navigate to="/admin/dashboard" />;
     } else {
-      return <Navigate to="/shop/home" />;
+      return <Navigate to="/farmAI/home" />;
     }
   }
 

@@ -113,7 +113,7 @@ app.get('/', (req, res) => {
   res.send('Welcome Farm AI');
 });
 
-mongoose.connect(MONGO_URI)
+mongoose.connect('mongodb+srv://sangammukherjee2022:sangammukherjee2024@cluster0.cz04e.mongodb.net/')
   .then(async () => {
     console.log('Connected to MongoDB');
     await initializeAdmin(); 

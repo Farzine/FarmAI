@@ -1,5 +1,4 @@
 import { HousePlug, LogOut, Menu, ShoppingCart, UserCog } from "lucide-react";
-import {img} from "react";
 import {
   Link,
   useLocation,
@@ -40,13 +39,16 @@ function MenuItems() {
   const [searchParams, setSearchParams] = useSearchParams();
   const [activeItem, setActiveItem] = useState("");
 
+  useEffect(() => {
+    const currentPath = location.pathname;
+    const activeMenuItem = farmAIHeaderMenuItems.find(
+      (menuItem) => menuItem.path === currentPath
+    );
+    setActiveItem(activeMenuItem ? activeMenuItem.id : "");
+  }, [location.pathname]);
+
   function handleNavigate(menuItem) {
     setActiveItem(menuItem.id);
-    sessionStorage.removeItem("filters");
-  
-    // Set current filter only for products and listing page
-    const currentFilter = menuItem.id === "seeds" ? { category: [menuItem.id] } : null;
-    sessionStorage.setItem("filters", JSON.stringify(currentFilter));
   
     navigate(menuItem.path);
   }
@@ -56,7 +58,7 @@ function MenuItems() {
       {farmAIHeaderMenuItems.map((menuItem) => (
          <Label
          onClick={() => handleNavigate(menuItem)}
-         className={`text-sm font-serif font-semibold cursor-pointer relative after:absolute after:content-[''] after:h-[2px] after:bg-green-600 after:left-1/2 after:bottom-[-4px] after:w-0 after:transition-all after:duration-300 after:ease-in-out hover:after:left-0 hover:after:w-full text-gray-700 hover:text-green-600 ${
+         className={`text-sm font-serif font-semibold cursor-pointer relative after:absolute after:content-[''] after:h-[2px] after:bg-green-600 after:left-1/2 after:bottom-[-4px] after:w-0 after:transition-all after:duration-0 after:ease-in-out hover:after:left-0 hover:after:w-full text-gray-700 hover:text-green-600 ${
            activeItem === menuItem.id ? "after:left-0 after:w-full text-green-600" : ""
          }`}
          key={menuItem.id}

@@ -13,7 +13,7 @@ import { addToCart, fetchCartItems } from "@/store/shop/cart-slice";
 import { useToast } from "@/components/ui/use-toast";
 import ProductDetailsDialog from "@/components/shopping-view/product-details";
 import { getFeatureImages } from "@/store/common-slice";
-import { Img } from "react-image"; // Import react-image component
+import { Img } from "react-image"; 
 
 const categoriesWithIcon = [
   { id: "seed", label: "Seeds", imageUrl: "/seed.png" },
@@ -105,7 +105,7 @@ function ShoppingHome() {
 
   return (
     <div className="flex flex-col min-h-screen">
-      <div className="relative w-full h-[480px] overflow-hidden">
+      <div className="relative w-full h-[600px] md:h-[480px] overflow-hidden">
         {featureImageList && featureImageList.length > 0
           ? featureImageList.map((slide, index) => (
               <img

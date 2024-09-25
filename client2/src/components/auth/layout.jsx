@@ -1,6 +1,7 @@
 import { Outlet } from "react-router-dom";
 import { Img } from "react-image";
 
+
 function AuthLayout() {
   return (
     <div className="flex min-h-screen w-full">

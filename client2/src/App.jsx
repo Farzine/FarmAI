@@ -28,6 +28,8 @@ import SearchProducts from "./pages/shopping-view/search";
 
 import ExpertAdvice from "./pages/farmAI-view/expertAdvice";
 import ScientificCultivation from "./pages/farmAI-view/scientificCultivation";
+import DiagnosisPage from "./pages/farmAI-view/dignosisPage";
+import Home from "./pages/farmAI-view/home";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -107,6 +109,8 @@ function App() {
         >
           <Route path="expertAdvice" element={<ExpertAdvice />} />
           <Route path="scientificCultivation" element={<ScientificCultivation />} />
+          <Route path="diagnosis" element={<DiagnosisPage />} />
+          <Route path="home" element={<Home />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
