@@ -1,25 +1,25 @@
 import ProductImageUpload from "@/components/admin-view/image-upload";
 import { Button } from "@/components/ui/button";
 import {
-  addScmEntry,
-  getScmEntries,
-  deleteScmEntry,
-  editScmEntry,
+  addExpertAdvice,
+  fetchAllExpertAdvice,
+  deleteExpertAdvice,
+  editExpertAdvice,
 } from "@/store/common-slice";
 import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useToast } from "@/components/ui/use-toast";
-import ScmTile from "../../components/admin-view/scm-tile"; 
+import ExpertAdviceTile from "../../components/admin-view/expertAdvice-tile"; 
 
 function ScientificCultivationPage() {
   const [imageFile, setImageFile] = useState(null);
   const [uploadedImageUrl, setUploadedImageUrl] = useState("");
   const [imageLoadingState, setImageLoadingState] = useState(false);
-  const [crop_name, setCropName] = useState("");
+  const [title, setTitle] = useState("");
   const [description, setDescription] = useState("");
   const [editId, setEditId] = useState(null); 
   const dispatch = useDispatch();
-  const { scmList } = useSelector((state) => state.commonFeature);
+  const {  expertAdviceList } = useSelector((state) => state.commonFeature);
   const { toast } = useToast(); 
 
   function handleUploadScmEntry() {
@@ -31,18 +31,18 @@ function ScientificCultivationPage() {
       formData.append("image", uploadedImageUrl);
     }
     formData.append("description", description);
-    formData.append("crop_name", crop_name);
+    formData.append("title", title);
 
     const action = editId
-      ? editScmEntry({ id: editId, formData }) 
-      : addScmEntry({ image: imageFile, description, crop_name: crop_name });
+      ? editExpertAdvice({ id: editId, formData }) // Send formData for editing
+      : addExpertAdvice({ image: imageFile, description, title: title });
 
     dispatch(action).then((data) => {
       if (data?.payload?.success) {
-        dispatch(getScmEntries());
+        dispatch(fetchAllExpertAdvice());
         setImageFile(null);
         setUploadedImageUrl("");
-        setCropName("");
+        setTitle("");
         setDescription("");
         setEditId(null); 
         toast({
@@ -56,26 +56,26 @@ function ScientificCultivationPage() {
   }
 
   function handleDelete(id) {
-    dispatch(deleteScmEntry(id)).then((data) => {
+    dispatch(deleteExpertAdvice(id)).then((data) => {
       if (data?.payload?.success) {
         toast({
           title: data?.payload?.message || "Entry deleted successfully",
           variant: "destructive",
         });
-        dispatch(getScmEntries());
+        dispatch(fetchAllExpertAdvice());
       }
     });
   }
 
   function handleEdit(scmItem) {
-    setCropName(scmItem.crop_name);
+    setTitle(scmItem.title);
     setDescription(scmItem.description);
     setUploadedImageUrl(scmItem.path); 
     setEditId(scmItem._id); 
   }
 
   useEffect(() => {
-    dispatch(getScmEntries());
+    dispatch(fetchAllExpertAdvice());
   }, [dispatch]);
 
   return (
@@ -91,9 +91,9 @@ function ScientificCultivationPage() {
       />
       <input
         type="text"
-        value={crop_name}
-        onChange={(e) => setCropName(e.target.value)}
-        placeholder="Crop Name"
+        value={title}
+        onChange={(e) => setTitle(e.target.value)}
+        placeholder="Title"
         className="mt-5 w-full p-2 border border-gray-300 rounded"
       />
       <textarea
@@ -107,11 +107,11 @@ function ScientificCultivationPage() {
       </Button>
 
       <div className="flex flex-row gap-4 mt-5">
-        {scmList && scmList.length > 0 ? (
-          scmList.map((scmItem) => (
-            <ScmTile
+        {expertAdviceList && expertAdviceList.length > 0 ? (
+          expertAdviceList.map((scmItem) => (
+            <ExpertAdviceTile
               key={scmItem._id}
-              scmItem={scmItem}
+              expertAdviceItem={scmItem}
               handleEdit={handleEdit}
               handleDelete={handleDelete}
             />

@@ -4,6 +4,7 @@ import {
   LayoutDashboard,
   ShoppingBasket,
   Flower2,
+  FileText,
   
 } from "lucide-react";
 import { Fragment } from "react";
@@ -34,6 +35,12 @@ const adminSidebarMenuItems = [
     label: "SCM",
     path: "/admin/scm",
     icon: <Flower2 />,
+  },
+  {
+    id: "expertAdvice",
+    label: "Expert Advice",
+    path: "/admin/expertAdvice",
+    icon: <FileText />,
   },
 ];
 

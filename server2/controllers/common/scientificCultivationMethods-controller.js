@@ -1,6 +1,5 @@
 const cloudinary = require('../../config/cloudinary');
 const ScientificCultivationMethods = require('../../models/ScientificCultivationMethods');
-const { imageUploadUtil } = require("../../helpers/cloudinary");
 
 exports.uploadScientificCultivationMethods = async (req, res) => {
     try {
@@ -76,7 +75,6 @@ exports.uploadScientificCultivationMethods = async (req, res) => {
       scientificCultivationMethods.crop_name = crop_name || scientificCultivationMethods.crop_name;
   
       if (file) {
-        // Destroy the old image in Cloudinary
         await cloudinary.uploader.destroy(scientificCultivationMethods.public_id);
   
         scientificCultivationMethods.path = file.path;
