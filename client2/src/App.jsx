@@ -10,6 +10,7 @@ import AdminFeatures from "./pages/admin-view/features";
 import AdminSCM from "./pages/admin-view/scm";
 import AdminExpertAdvice from "./pages/admin-view/expertAdvice";
 import ShoppingLayout from "./components/shopping-view/layout";
+import FarmAILayout from "./components/farmAI-view/layout";
 import NotFound from "./pages/not-found";
 import ShoppingHome from "./pages/shopping-view/home";
 import ShoppingListing from "./pages/shopping-view/listing";
@@ -24,6 +25,9 @@ import { Skeleton } from "@/components/ui/skeleton";
 import PaypalReturnPage from "./pages/shopping-view/paypal-return";
 import PaymentSuccessPage from "./pages/shopping-view/payment-success";
 import SearchProducts from "./pages/shopping-view/search";
+
+import ExpertAdvice from "./pages/farmAI-view/expertAdvice";
+import ScientificCultivation from "./pages/farmAI-view/scientificCultivation";
 
 function App() {
   const { user, isAuthenticated, isLoading } = useSelector(
@@ -92,6 +96,17 @@ function App() {
           <Route path="paypal-return" element={<PaypalReturnPage />} />
           <Route path="payment-success" element={<PaymentSuccessPage />} />
           <Route path="search" element={<SearchProducts />} />
+        </Route>
+        <Route
+          path="/farmAI"
+          element={
+            <CheckAuth isAuthenticated={isAuthenticated} user={user}>
+              <FarmAILayout />
+            </CheckAuth>
+          }
+        >
+          <Route path="expertAdvice" element={<ExpertAdvice />} />
+          <Route path="scientificCultivation" element={<ScientificCultivation />} />
         </Route>
         <Route path="/unauth-page" element={<UnauthPage />} />
         <Route path="*" element={<NotFound />} />
