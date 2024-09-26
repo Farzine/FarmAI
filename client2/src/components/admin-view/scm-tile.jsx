@@ -12,7 +12,7 @@ function ScmTile({ scmItem, handleEdit, handleDelete }) {
         />
         <CardContent>
           <h2 className="text-xl font-bold mb-2 mt-2">{scmItem?.crop_name}</h2>
-          <p className="text-gray-600">{scmItem?.description}</p>
+          <p className="text-gray-600">{scmItem?.description.slice(0, 100)}...</p>
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           <Button onClick={() => handleEdit(scmItem)}>Edit</Button>

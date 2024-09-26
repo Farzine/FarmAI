@@ -8,7 +8,7 @@
     "start": "server.js",
     "dev": "nodemon server.js"
   },
-  "author": "sangam mukherjee",
+  "author": "Farzine Hossen",
   "license": "ISC",
   "dependencies": {
     "bcryptjs": "^2.4.3",
@@ -23,6 +23,7 @@
     "multer": "^1.4.5-lts.1",
     "multer-storage-cloudinary": "^4.0.0",
     "nodemon": "^3.1.4",
+    "openai": "^4.64.0",
     "passport": "^0.7.0",
     "paypal-rest-sdk": "^1.8.1",
     "server": "file:"

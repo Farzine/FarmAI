@@ -12,7 +12,7 @@ function ScmTile({ expertAdviceItem, handleEdit, handleDelete }) {
         />
         <CardContent>
           <h2 className="text-xl font-bold mb-2 mt-2">{expertAdviceItem?.title}</h2>
-          <p className="text-gray-600">{expertAdviceItem?.description}</p>
+          <p className="text-gray-600">{expertAdviceItem?.description.slice(0, 100)}...</p>
         </CardContent>
         <CardFooter className="flex justify-between items-center">
           <Button onClick={() => handleEdit(expertAdviceItem)}>Edit</Button>

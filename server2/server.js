@@ -26,6 +26,8 @@ const shopReviewRouter = require("./routes/shop/review-routes");
 const commonFeatureRouter = require("./routes/common/feature-routes");
 const commonSCMRouter = require("./routes/common/scientificCultivationMethods-routes");
 const commonEARouter = require("./routes/common/expertAdvice-routes");
+
+const imageAnalyzerRoutes = require('./routes/imageAnalyzerRoutes');
 ////////////////////////////////////////////////////////////////////
 
 
@@ -86,6 +88,8 @@ app.use("/api/shop/review", shopReviewRouter);
 app.use("/api/common/feature", commonFeatureRouter);
 app.use("/api/common/scm", commonSCMRouter);
 app.use("/api/common/expertAdvice", commonEARouter);
+
+app.use('/api/images', imageAnalyzerRoutes);
 /////////////////////////////////////////////////////////////////////////
 
 app.get('/', (req, res) => {
