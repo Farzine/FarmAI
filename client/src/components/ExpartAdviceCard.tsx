@@ -26,8 +26,8 @@ const ExpartAdviceCard: React.FC<TopicCardProps> = ({ title, description, posted
           <h2 className="text-lg font-semibold">{title}</h2>
           <p className="text-sm text-gray-600">{description.slice(0, 100)}...</p>
           <p className="text-xs text-gray-400">Posted {postedDate}</p>
-          <button 
-            onClick={handleReadMore} 
+          <button
+            onClick={handleReadMore}
             className="mt-2 px-4 py-2 bg-white text-black text-sm rounded hover:bg-green-600 border-2 border-green-600 "
           >
             Read More
