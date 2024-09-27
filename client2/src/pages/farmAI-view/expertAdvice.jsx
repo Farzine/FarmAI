@@ -48,7 +48,7 @@ const ExpertAdvice = () => {
     <div className="flex h-screen">
       {/* Left Sidebar */}
       <div className="w-1/3 bg-gray-100 p-4 overflow-y-auto border-r border-gray-300">
-  <h2 className="text-xl font-bold mb-4">Scientific Cultivation System</h2>
+  <h2 className="text-xl font-bold mb-4">Expert  Advice</h2>
   <ul className="space-y-4">
     {expertAdviceList.length > 0 ? (
       expertAdviceList.map((advice) => (

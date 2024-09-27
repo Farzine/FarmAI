@@ -12,30 +12,32 @@ const ExpertAdviceForm = () => {
 
   return (
     <div>
-      {/* Displaying expert advice */}
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-8">
-        {expertAdviceList && expertAdviceList.length > 0 ? (
-          expertAdviceList.map((advice) => (
-            <div key={advice._id} className="border rounded-lg p-4 max-w-md mx-auto shadow-lg bg-white">
-              <div className="flex">
-                <div className="flex-shrink-0">
-                  <img
-                    className="h-24 w-24 rounded-lg object-cover"
-                    src={advice.path || '/placeholder.png'} // Fallback in case the image is missing
-                    alt={advice.title}
-                  />
-                </div>
-                <div className="ml-4">
-                  <h2 className="text-lg font-semibold">{advice.title}</h2>
-                  <p className="text-sm text-gray-600">{advice.description.slice(0, 100)}...</p>
-                  <p className="text-xs text-gray-400">Posted {advice.postedDate}</p>
+      {/* Wrapping the grid inside a horizontally scrollable container */}
+      <div className="overflow-x-scroll mt-8">
+        <div className="flex space-x-4">
+          {expertAdviceList && expertAdviceList.length > 0 ? (
+            expertAdviceList.map((advice) => (
+              <div key={advice._id} className="border rounded-lg p-4 min-w-[400px] max-w-[300px] mx-auto shadow-lg bg-white">
+                <div className="flex">
+                  <div className="flex-shrink-0">
+                    <img
+                      className="h-36 w-28 rounded-lg object-cover"
+                      src={advice.path || '/placeholder.png'} // Fallback in case the image is missing
+                      alt={advice.title}
+                    />
+                  </div>
+                  <div className="ml-4">
+                    <h2 className="text-lg font-semibold">{advice.title}</h2>
+                    <p className="text-sm text-gray-600">{advice.description.slice(0, 100)}...</p>
+                    <p className="text-xs text-gray-400">Posted {advice.postedDate}</p>
+                  </div>
                 </div>
               </div>
-            </div>
-          ))
-        ) : (
-          <p>No expert advice available yet.</p>
-        )}
+            ))
+          ) : (
+            <p>No expert advice available yet.</p>
+          )}
+        </div>
       </div>
     </div>
   );
