@@ -1,33 +1,35 @@
 import React, { useState, useEffect } from 'react';
+import {Link,useNavigate} from 'react-router-dom';
 
 const images = [
   {
     id: 1,
-    url: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    url: '/2.png',
     text: 'Help us solve plant diseases!',
     description: 'Join us in the fight against crop diseases with your support and donations.'
   },
   {
     id: 2,
-    url: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719695807/samples/breakfast.jpg',
+    url: '/1.png',
     text: 'Help us solve plant diseases!',
     description: 'Join us in the fight against crop diseases with your support and donations.'
   },
   {
     id: 3,
-    url: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719935885/iakiez3xo3g0v2nxymhj.jpg',
+    url: '/3.jpg',
     text: 'Help us solve plant diseases!',
     description: 'Join us in the fight against crop diseases with your support and donations.'
   },
   {
     id: 4,
-    url: 'https://res.cloudinary.com/djmgdgx86/image/upload/v1719695807/samples/breakfast.jpg',
+    url: '/4.jpg',
     text: 'Help us solve plant diseases!',
     description: 'Join us in the fight against crop diseases with your support and donations.'
   },
 ];
 
 const Carousel = () => {
+  const navigate = useNavigate();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const nextSlide = () => {
@@ -36,10 +38,14 @@ const Carousel = () => {
     setCurrentIndex(newIndex);
   };
 
+  function handleNavigate() {
+    navigate('/farmAI/diagnosis')
+  }
+
   useEffect(() => {
     const interval = setInterval(() => {
       nextSlide();
-    }, 3000); // Change image every 3 seconds
+    }, 5000); // Change image every 5 seconds
     return () => clearInterval(interval);
   }, [currentIndex]);
 
@@ -52,7 +58,7 @@ const Carousel = () => {
         <div className="flex flex-col items-center justify-center w-full h-full bg-black bg-opacity-50 text-white">
           <h1 className="text-4xl font-bold mb-4">{images[currentIndex].text}</h1>
           <p className="text-lg mb-8">{images[currentIndex].description}</p>
-          <button className="bg-green-500 text-white px-6 py-3 rounded-md hover:bg-green-700">
+          <button className="bg-green-600 text-white px-6 py-3 rounded-md hover:bg-green-700" onClick={() =>handleNavigate() }>
             Click to Diagnose Disease
           </button>
         </div>
