@@ -4,13 +4,13 @@ import { useNavigate } from 'react-router-dom';
 const suggestions = [
   {
     id: 1,
-    image: '/images.jpeg',
+    image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727367092/c1hceijjvhyux0pbu1gs.jpg',
     title: 'Blight Disease',
     description: 'Yellowing leaves with dark spots. Vertical farming is the practice of growing crops in vertically stacked layers.',
   },
   {
     id: 2,
-    image: '/images.jpeg',
+    image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727367865/ulokmdzu0bhcvzjld7kg.jpg',
     title: 'Powdery Mildew',
     description: 'White powdery spots on leaves. Yellowing leaves with dark spots.',
   },
@@ -22,7 +22,7 @@ const suggestions = [
   },
   {
     id: 4,
-    image: '/images.jpeg',
+    image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727368354/o1agwnpigj1ph3dwoyp1.jpg',
     title: 'Aphid Infestation',
     description: 'Sticky residue on leaves. Vertical farming is the practice of growing crops in vertically stacked layers.',
   },
@@ -42,7 +42,7 @@ const AIGeneratedSuggestions = () => {
 
   return (
     <div className="flex flex-col items-center p-6 w-full">
-      <h2 className="text-2xl font-bold mb-10">AI-Generated Suggestions</h2>
+      <h2 className="text-3xl font-bold mb-12 mt-16">AI-Generated Suggestions</h2>
       <div className="flex overflow-x-auto space-x-16">
         {suggestions.map((suggestion) => (
           <div

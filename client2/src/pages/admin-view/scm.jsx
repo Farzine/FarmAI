@@ -100,7 +100,7 @@ function ScientificCultivationPage() {
         value={description}
         onChange={(e) => setDescription(e.target.value)}
         placeholder="Description"
-        className="mt-3 w-full p-2 border border-gray-300 rounded"
+        className="mt-3 w-full h-56 p-2 border border-gray-300 rounded"
       />
       <Button onClick={handleUploadScmEntry} className="mt-5 w-full">
         {editId ? "Update Entry" : "Upload"}

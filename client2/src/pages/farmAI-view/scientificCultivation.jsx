@@ -48,9 +48,10 @@ const ScientificCultivation = () => {
   return (
     <div className="flex h-screen">
       {/* Left Sidebar */}
-      <div className="w-1/3 bg-gray-100 p-4 overflow-y-auto border-r border-gray-300">
-  <h2 className="text-xl font-bold mb-4">Scientific Cultivation System</h2>
-  <ul className="space-y-4">
+      <div className="w-1/4 bg-gray-100 p-4 overflow-y-auto border-r border-gray-300">
+  <h2 className="text-2xl font-bold mb-4">Scientific Cultivation System</h2>
+  <hr className="border-t-2 border-gray-300 my-4" />
+  <ul className="space-y-12">
     {scmList.length > 0 ? (
       scmList.map((advice) => (
         <li
@@ -80,7 +81,7 @@ const ScientificCultivation = () => {
 </div>
 
       {/* Right Main Content */}
-      <div className="w-2/3 bg-white p-8 overflow-y-auto">
+      <div className="w-3/4 bg-white p-8 overflow-y-auto">
         {selectedAdvice ? (
           <div>
             <h2 className="text-3xl font-bold mb-4 text-center">{selectedAdvice.crop_name}</h2>

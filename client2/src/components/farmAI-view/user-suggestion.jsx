@@ -49,8 +49,8 @@ const UserSuggestionCard = ({ name, date, comment, rating, url }) => {
 // User Suggestions Component
 const UserSuggestions = () => {
   return (
-    <div className="w-full max-w-5xl mx-auto px-4 py-8">
-      <h2 className="text-2xl font-bold text-center mb-8">User Suggestions</h2>
+    <div className="w-full max-w-5xl mx-auto px-4 py-16">
+      <h2 className="text-3xl font-bold text-center mb-16">User Suggestions</h2>
       <div className="flex flex-wrap justify-center gap-6">
         {userSuggestions.map((suggestion, index) => (
           <UserSuggestionCard key={index} {...suggestion} />

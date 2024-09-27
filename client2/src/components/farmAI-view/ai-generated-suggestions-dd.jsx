@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 const suggestions = [
   {
     id: 1,
-    image: '/images.jpeg',
+    image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727368354/o1agwnpigj1ph3dwoyp1.jpg',
     title: 'Tomato Leaf Spot',
     description: 'Tomato plant showing symptoms of leaf spot disease. Advised to use copper-based fungicides.',
     date: '2023-04-12'
@@ -18,10 +18,16 @@ const suggestions = [
   },
   {
     id: 3,
-    image: '/images.jpeg',
+    image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727367865/ulokmdzu0bhcvzjld7kg.jpg',
     title: 'Potato Late Blight',
     description: 'Potato plant suffering from late blight. Advised to use metalaxyl-based fungicides.',
     date: '2023-02-18'
+  },
+  {
+    id: 4,
+    image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727367092/c1hceijjvhyux0pbu1gs.jpg',
+    title: 'Aphid Infestation',
+    description: 'Sticky residue on leaves. Vertical farming is the practice of growing crops in vertically stacked layers.',
   },
   // More suggestions...
 ];

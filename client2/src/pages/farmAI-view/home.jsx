@@ -27,8 +27,8 @@ function Home() {
       </section>
 
       {/* Expert Advice Section */}
-      <section className="w-full max-w-6xl px-4 py-12">
-        <h2 className="text-center text-2xl font-semibold mb-8">Expert Advice</h2>
+      <section className="w-full max-w-6xl px-4 py-16">
+        <h2 className="text-center text-3xl font-bold mb-10">Expert Advice</h2>
        
           <ExpartAdviceCard />
         
