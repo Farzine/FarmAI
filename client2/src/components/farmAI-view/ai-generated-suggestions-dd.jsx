@@ -23,12 +23,12 @@ const suggestions = [
     description: 'Potato plant suffering from late blight. Advised to use metalaxyl-based fungicides.',
     date: '2023-02-18'
   },
-  {
-    id: 4,
-    image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727367092/c1hceijjvhyux0pbu1gs.jpg',
-    title: 'Aphid Infestation',
-    description: 'Sticky residue on leaves. Vertical farming is the practice of growing crops in vertically stacked layers.',
-  },
+  // {
+  //   id: 4,
+  //   image: 'https://res.cloudinary.com/dsd4b2lkg/image/upload/v1727367092/c1hceijjvhyux0pbu1gs.jpg',
+  //   title: 'Aphid Infestation',
+  //   description: 'Sticky residue on leaves. Vertical farming is the practice of growing crops in vertically stacked layers.',
+  // },
   // More suggestions...
 ];
 
@@ -46,7 +46,7 @@ const AIGeneratedSuggestionsdd = () => {
   return (
     <div className="flex flex-col items-start ml-10 p-8 w-full">
       <h2 className="text-2xl font-bold mb-8">AI-Generated Past Suggestions</h2>
-      <div className="flex flex-wrap justify-center gap-8">
+      <div className="flex flex-wrap justify-center gap-8 ">
         {suggestions.map((suggestion) => (
           <div
             key={suggestion.id}
