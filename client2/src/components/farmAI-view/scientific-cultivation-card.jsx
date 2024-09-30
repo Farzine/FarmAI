@@ -26,7 +26,7 @@ const ScientificCultivationCard = () => {
       {isLoading ? (
         <p>Loading...</p>
       ) : (
-        <div className="space-y-8 max-h-[350px] overflow-y-auto">
+        <div className="space-y-8 max-h-[350px] overflow-y-auto scrollbar-hide">
           {" "}
           {/* Added scrollable container */}
           {scmList && scmList.length > 0 ? (

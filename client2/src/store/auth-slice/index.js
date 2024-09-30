@@ -34,7 +34,6 @@ export const loginUser = createAsyncThunk(
         withCredentials: true,
       }
     );
-
     return response.data;
   }
 );

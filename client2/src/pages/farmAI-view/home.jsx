@@ -6,7 +6,7 @@ import ScientificCultivationCard from "@/components/farmAI-view/scientific-culti
 
 function Home() {
   return (
-    <div className="flex flex-col items-center min-h-screen bg-gray-100 text-gray-700">
+    <div className="flex flex-col items-center min-h-screen bg-gray-100 text-gray-700 mt-16">
       {/* Hero Section with Carousel */}
       <div className="w-full ">
         <Carousel />

@@ -1,36 +1,32 @@
-// controllers/imageAnalyzerController.js
 
 const ImageAnalyzer = require('../models/ImageAnalyzer');
 const cloudinary = require('../config/cloudinary');
 const path = require('path');
 const fs = require('fs');
-const multer = require('multer'); // Ensure multer is imported
-
+const multer = require('multer'); 
+const axios = require('axios'); 
 const OpenAI = require('openai');
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY_NAFI,
 });
 
-
 const createImageAnalyzer = async (req, res) => {
   try {
     const { userInputText } = req.body;
     const imageFile = req.file; 
-    console.log('User Input Text:', userInputText);
-    console.log('Image File:', imageFile);
+    const userId = req.user._id;
 
     let cloudinaryImageUrl = null;
     let generatedImageUrl = null;
 
+  
     if (imageFile) {
-      // Validate MIME type
       const allowedMimeTypes = ['image/jpeg', 'image/png'];
       if (!allowedMimeTypes.includes(imageFile.mimetype)) {
         fs.unlinkSync(imageFile.path);
         return res.status(400).json({ error: 'Unsupported MIME type. Please upload JPG or PNG images.' });
       }
 
-      // Extract and validate file extension
       const ext = path.extname(imageFile.originalname).slice(1).toLowerCase();
       const allowedFormats = ['jpg', 'jpeg', 'png'];
       if (!allowedFormats.includes(ext)) {
@@ -38,38 +34,77 @@ const createImageAnalyzer = async (req, res) => {
         return res.status(400).json({ error: 'Unsupported file format. Please upload JPG or PNG images.' });
       }
 
-      // Upload to Cloudinary with correct format
       const uploadedImage = await cloudinary.uploader.upload(imageFile.path, {
         folder: 'FarmAIgpt4',
-        format: ext, // Use the actual file extension
+        format: ext,
       });
       cloudinaryImageUrl = uploadedImage.secure_url;
     }
+    
 
-    // Generate response using GPT-4 based on the text input (image optional)
     const gptResponse = await openai.chat.completions.create({
-      model: 'gpt-4', // Correct model name
+      model: "gpt-4o-mini",
       messages: [
-        { role: 'system', content: 'You are a helpful assistant.' },
-        { role: 'user', content: userInputText },
+        {
+          "role": "user",
+          "content": [
+            { "type": "text", "text": userInputText },
+            {
+              "type": "image_url",
+              "image_url": {
+                "url": cloudinaryImageUrl,
+              },
+            },
+          ],
+        },
       ],
-      max_tokens: 200,
+      max_tokens: 300,
     });
 
     const gptText = gptResponse.choices[0].message.content.trim();
 
+    const prompt = `${userInputText}. Also, consider this:- ${gptText.substring(0, 200)}`;
     if (imageFile) {
       const generatedImage = await openai.images.generate({
-        prompt: gptText,
+        prompt: prompt,
         n: 1,
         size: '1024x1024',
       });
 
       generatedImageUrl = generatedImage.data[0].url;
+
+      // Download the AI-generated image
+      const imageResponse = await axios({
+        url: generatedImageUrl,
+        method: 'GET',
+        responseType: 'stream',
+      });
+
+      const fileName = `generated_${Date.now()}.png`;
+      const filePath = path.join(__dirname, '../uploads', fileName);
+      
+
+      const writer = fs.createWriteStream(filePath);
+      imageResponse.data.pipe(writer);
+
+      await new Promise((resolve, reject) => {
+        writer.on('finish', resolve);
+        writer.on('error', reject);
+      });
+
+      const uploadedGeneratedImage = await cloudinary.uploader.upload(filePath, {
+        folder: 'FarmAIgpt4',
+        format: 'png',
+      });
+
+      generatedImageUrl = uploadedGeneratedImage.secure_url;
+
+      fs.unlinkSync(filePath);
     }
 
-    // Store everything in the database
+
     const newEntry = new ImageAnalyzer({
+      user: userId, 
       userInputText,
       cloudinaryImageUrl,
       gptResponse: gptText,
@@ -84,11 +119,9 @@ const createImageAnalyzer = async (req, res) => {
     });
   } catch (error) {
     console.error(error);
-    
+
     if (error.response) {
-      // OpenAI API returned an error response
       const { status, data } = error.response;
-      
       if (status === 400 && data.error.code === 'model_not_found') {
         return res.status(400).json({ error: 'The specified model does not exist or you do not have access to it. Please verify your OpenAI subscription and model name.' });
       }
@@ -100,17 +133,14 @@ const createImageAnalyzer = async (req, res) => {
       return res.status(status).json({ error: data.error.message });
     }
 
-    // Handle Multer errors
     if (error instanceof multer.MulterError) {
       return res.status(400).json({ error: error.message });
     }
 
-    // Handle custom errors thrown in multer configuration
     if (error.message) {
       return res.status(400).json({ error: error.message });
     }
 
-    // Generic error message
     res.status(500).json({ error: 'Something went wrong with the image analysis.' });
   }
 };

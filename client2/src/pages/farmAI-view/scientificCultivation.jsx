@@ -1,19 +1,25 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { fetchAllExpertAdvice } from "../../store/common-slice/index"; // Ensure the correct path
+import { getScmEntries } from "../../store/common-slice/index"; 
 
 
 const ScientificCultivation = () => {
   const dispatch = useDispatch();
-  const [selectedAdvice, setSelectedAdvice] = useState(null); // For selecting advice
+  const [selectedAdvice, setSelectedAdvice] = useState(null); 
 
   // Fetch expert advice from Redux store
   const { scmList } = useSelector((state) => state.commonFeature);
 
   // Fetch expert advice data when component mounts
   useEffect(() => {
-    dispatch(fetchAllExpertAdvice());
+    dispatch(getScmEntries());
   }, [dispatch]);
+
+  useEffect(() => {
+    if (scmList.length > 0) {
+      setSelectedAdvice(scmList[0]); // Set the first advice as default
+    }
+  }, [scmList]);
 
   // Function to handle selection of an advice item (missing part)
   const handleSelectAdvice = (advice) => {
@@ -46,12 +52,12 @@ const ScientificCultivation = () => {
 };
 
   return (
-    <div className="flex h-screen">
+    <div className="flex h-screen mt-16">
       {/* Left Sidebar */}
       <div className="w-1/4 bg-gray-100 p-4 overflow-y-auto border-r border-gray-300">
   <h2 className="text-2xl font-bold mb-4">Scientific Cultivation System</h2>
   <hr className="border-t-2 border-gray-300 my-4" />
-  <ul className="space-y-12">
+  <ul className="space-y-16 mt-10">
     {scmList.length > 0 ? (
       scmList.map((advice) => (
         <li
@@ -81,7 +87,7 @@ const ScientificCultivation = () => {
 </div>
 
       {/* Right Main Content */}
-      <div className="w-3/4 bg-white p-8 overflow-y-auto">
+      <div className="w-3/4 bg-white p-8 overflow-y-auto scrollbar-hide">
         {selectedAdvice ? (
           <div>
             <h2 className="text-3xl font-bold mb-4 text-center">{selectedAdvice.crop_name}</h2>
