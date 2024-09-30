@@ -1,18 +1,18 @@
 // src/components/AICropDisease.js
 
-import React, { useState } from 'react';
-import axios from 'axios';
-import Cookies from 'js-cookie';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from "react";
+import ReactMarkdown from "react-markdown";
+import axios from "axios";
+import Cookies from "js-cookie";
+import { useNavigate } from "react-router-dom";
 
 const AICropDisease = () => {
-  const [description, setDescription] = useState('');
+  const [description, setDescription] = useState("");
   const [selectedImage, setSelectedImage] = useState(null);
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
-  
 
   function handleNavigate() {
     navigate("/auth/login");
@@ -31,20 +31,24 @@ const AICropDisease = () => {
     setResponseData(null);
 
     try {
-      const token = Cookies.get('token');
+      const token = Cookies.get("token");
       if (!token) handleNavigate();
       const formData = new FormData();
-      formData.append('userInputText', description);
+      formData.append("userInputText", description);
       if (selectedImage) {
-        formData.append('image', selectedImage);
+        formData.append("image", selectedImage);
       }
 
-      const response = await axios.post(`${import.meta.env.VITE_APP_BACKEND_URL}/api/images/analyze`, formData, {
-        headers: {
-          'Content-Type': 'multipart/form-data',
-          'Authorization': `Bearer ${token}`,
-        },
-      });
+      const response = await axios.post(
+        `${import.meta.env.VITE_APP_BACKEND_URL}/api/images/analyze`,
+        formData,
+        {
+          headers: {
+            "Content-Type": "multipart/form-data",
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
 
       setResponseData(response.data.data);
       setLoading(false);
@@ -53,7 +57,7 @@ const AICropDisease = () => {
       setError(
         err.response && err.response.data && err.response.data.error
           ? err.response.data.error
-          : 'An error occurred while processing your request.'
+          : "An error occurred while processing your request."
       );
       setLoading(false);
     }
@@ -62,11 +66,15 @@ const AICropDisease = () => {
   return (
     <div className="flex justify-center mt-10">
       <div className="p-8 w-full max-w-2xl bg-white shadow-md rounded-md">
-        <h1 className="text-2xl font-semibold mb-6 text-center">AI Crop Disease Diagnosis</h1>
+        <h1 className="text-2xl font-semibold mb-6 text-center">
+          AI Crop Disease Diagnosis
+        </h1>
 
         <form onSubmit={handleSubmit} className="space-y-4">
           <div>
-            <label className="block text-gray-700">Describe the symptoms of your infected crops</label>
+            <label className="block text-gray-700">
+              Describe the symptoms of your infected crops
+            </label>
             <textarea
               value={description}
               onChange={(e) => setDescription(e.target.value)}
@@ -78,14 +86,16 @@ const AICropDisease = () => {
           </div>
 
           <div>
-            <label className="block text-gray-700">Upload Image (optional)</label>
+            <label className="block text-gray-700">
+              Upload Image (optional)
+            </label>
             <input
               type="file"
               accept="image/jpeg, image/png"
               onChange={handleImageChange}
               className="mt-2"
             />
-             <p className="text-sm text-gray-500 mt-1">
+            <p className="text-sm text-gray-500 mt-1">
               Supported formats: jpeg, jpg, png. Max size: 2MB.
             </p>
           </div>
@@ -96,7 +106,7 @@ const AICropDisease = () => {
               className="px-4 py-2 bg-green-600 text-white rounded-md hover:bg-green-700"
               disabled={loading}
             >
-              {loading ? 'Analyzing...' : 'Submit'}
+              {loading ? "Analyzing..." : "Submit"}
             </button>
           </div>
         </form>
@@ -109,7 +119,9 @@ const AICropDisease = () => {
 
         {responseData && (
           <div className="mt-6">
-            <h2 className="text-lg font-medium mb-4">FarmAI Analysis Result:</h2>
+            <h2 className="text-lg font-medium mb-4">
+              FarmAI Analysis Result:
+            </h2>
             <div className="space-y-4">
               <div>
                 <h3 className="font-semibold">Your Input:</h3>
@@ -129,7 +141,9 @@ const AICropDisease = () => {
 
               <div>
                 <h3 className="font-semibold">FarmAI Response:</h3>
-                <p>{responseData.gptResponse}</p>
+                <ReactMarkdown className="whitespace-pre-line">
+                  {responseData.gptResponse}
+                </ReactMarkdown>
               </div>
 
               {responseData.generatedImageUrl && (
