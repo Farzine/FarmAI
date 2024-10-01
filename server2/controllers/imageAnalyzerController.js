@@ -42,26 +42,33 @@ const createImageAnalyzer = async (req, res) => {
     }
     
 
-    const gptResponse = await openai.chat.completions.create({
-      model: "gpt-4o-mini",
-      messages: [
-        {
-          "role": "user",
-          "content": [
-            { "type": "text", "text": userInputText },
-            {
-              "type": "image_url",
-              "image_url": {
-                "url": cloudinaryImageUrl,
-              },
-            },
-          ],
-        },
-      ],
-      max_tokens: 300,
-    });
+   // Build messages array based on availability of the image URL
+   const messages = [
+    { "role": "user", "content": { "type": "text", "text": userInputText } }
+  ];
 
-    const gptText = gptResponse.choices[0].message.content.trim();
+  if (cloudinaryImageUrl) {
+    messages.push({
+      "type": "image_url",
+      "image_url": { "url": cloudinaryImageUrl }
+    });
+  }
+
+  // Make OpenAI API request for chat completion
+  const gptResponse = await openai.chat.completions.create({
+    model: "gpt-4o-mini",
+    messages: [
+      {
+        "role": "user",
+        "content": userInputText,
+      },
+      ...(cloudinaryImageUrl ? [{ "role": "user", "content": { "type": "image_url", "image_url": cloudinaryImageUrl } }] : [])
+    ],
+    max_tokens: 300,
+  });
+
+
+    const gptText = gptResponse.choices[0].message.content;
 
     const prompt = `${userInputText}. Also, consider this:- ${gptText.substring(0, 200)}`;
     if (imageFile) {
@@ -106,9 +113,9 @@ const createImageAnalyzer = async (req, res) => {
     const newEntry = new ImageAnalyzer({
       user: userId, 
       userInputText,
-      cloudinaryImageUrl,
+      cloudinaryImageUrl: cloudinaryImageUrl || '',
       gptResponse: gptText,
-      generatedImageUrl,
+      generatedImageUrl: generatedImageUrl || '',
     });
 
     await newEntry.save();
