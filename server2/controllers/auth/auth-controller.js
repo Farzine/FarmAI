@@ -67,7 +67,14 @@ const loginUser = async (req, res) => {
       { expiresIn: "24h" }
     );
 
-    res.cookie("token", token, { maxAge: 7 * 24 * 60 * 60 * 1000 }).json({
+    res.cookie("token", token, 
+      { 
+        maxAge: 7 * 24 * 60 * 60 * 1000, // 1 week
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // only set secure in production
+        sameSite: process.env.NODE_ENV === 'production' ? 'None' : 'Lax', // allow cross-site in production
+        path: '/', 
+      }).json({
       success: true,
       message: "Logged in successfully",
       user: {
