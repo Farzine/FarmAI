@@ -1,14 +1,5 @@
 {
     "version": 2,
-    "builds": [
-      {
-        "src": "package.json",
-        "use": "@vercel/static-build",
-        "config": {
-          "distDir": "dist"
-        }
-      }
-    ],
     "env": {
       "VITE_CLOUDINARY_CLOUD_NAME": "@cloudinary_cloud_name",
       "VITE_CLOUDINARY_API_KEY": "@cloudinary_api_key",
@@ -30,8 +21,6 @@
         "src": "/(.*)",
         "dest": "/index.html"
       }
-    ],
-    "buildCommand": "npm run build",
-    "outputDirectory": "dist"
+    ]
   }
   
