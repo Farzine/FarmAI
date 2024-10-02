@@ -2,13 +2,29 @@
     "version": 2,
     "builds": [
       {
-        "src": "index.html",
+        "src": "package.json",
         "use": "@vercel/static-build",
         "config": {
           "distDir": "dist"
         }
       }
     ],
+    "env": {
+      "VITE_CLOUDINARY_CLOUD_NAME": "@cloudinary_cloud_name",
+      "VITE_CLOUDINARY_API_KEY": "@cloudinary_api_key",
+      "VITE_CLOUDINARY_API_SECRET": "@cloudinary_api_secret",
+      "VITE_IMG_UPLOAD_PRESET": "@img_upload_preset",
+      "VITE_APP_BACKEND_URL": "@app_backend_url",
+      "VITE_APP_FRONTEND_URL": "@app_frontend_url",
+      "MONGO_URI": "@mongo_uri",
+      "GOOGLE_CLIENT_ID": "@google_client_id",
+      "SMTP_HOST": "@smtp_host",
+      "SMTP_PORT": "@smtp_port",
+      "SMTP_USER": "@smtp_user",
+      "SMTP_PASSWORD": "@smtp_password",
+      "EMAIL_FROM": "@email_from",
+      "SMTP_SECURE": "@smtp_secure"
+    },
     "routes": [
       {
         "src": "/(.*)",
