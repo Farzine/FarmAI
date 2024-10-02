@@ -73,7 +73,7 @@ FarmAI aims to empower farmers by providing timely diagnosis of crop diseases th
 - **Expert Advice**: Read recommendations from experts on how to improve crop yield and management.
 
 ## Demo Video
-You can find a demo video of the project [here].(https://github.com/Farzine/FarmAI/tree/main/client2/public/FarmAI.mp4)
+You can find a demo video of the project [here](https://github.com/Farzine/FarmAI/tree/main/client2/public/FarmAI.mp4)
 
 
 ## Contributing
