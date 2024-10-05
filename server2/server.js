@@ -2,32 +2,12 @@ require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
 const bodyParser = require('body-parser');
-const session = require('express-session');
 const cors = require('cors'); 
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
 const frontUrl = process.env.NEXT_PUBLIC_APP_FRONTEND_URL;
 
 
-
-const app = express();
-const PORT = 5000;
-app.set('trust proxy', 1);
-
-
-app.use(session({
-  name: 'connect.sid', 
-  secret: process.env.SECRET_KEY,
-  resave: false,
-  saveUninitialized: false, 
-  cookie: { 
-    secure: process.env.NODE_ENV === 'production', 
-    sameSite: 'None', 
-    path: '/', 
-    maxAge: 24 * 60 * 60 * 1000, 
-    domain: '.vercel.app', 
-  }
-}));
 
 ////////////////////////////////////////////////////////////////////
 const authRouter = require("./routes/auth/auth-routes");
@@ -51,6 +31,10 @@ const imageAnalyzerRoutes = require('./routes/imageAnalyzerRoutes');
 
 
 const { MONGO_URI } = require('./config/config');
+
+const app = express();
+const PORT = 5000;
+
 
 const corsOptions ={
   origin:`${frontUrl}`, 
@@ -77,10 +61,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-
-// Initialize Passport and session handling
-app.use(passport.initialize());
-app.use(passport.session());
 
 
 
