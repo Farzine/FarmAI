@@ -1,6 +1,5 @@
 require('dotenv').config();
 const express = require('express');
-const passport = require('passport');
 const bodyParser = require('body-parser');
 const cors = require('cors'); 
 const mongoose = require('mongoose');
@@ -32,9 +31,6 @@ const imageAnalyzerRoutes = require('./routes/imageAnalyzerRoutes');
 
 const { MONGO_URI } = require('./config/config');
 
-const app = express();
-const PORT = 5000;
-
 
 const corsOptions ={
   origin:`${frontUrl}`, 
@@ -51,7 +47,8 @@ const corsOptions ={
 }
 
 
-
+const app = express();
+const PORT = 5000;
 app.use(cors(corsOptions));
 
 

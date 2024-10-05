@@ -69,9 +69,6 @@ const loginUser = async (req, res) => {
 
     res.cookie("token", token, 
       { 
-        httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
-        path: '/', 
         maxAge: 24 * 60 * 60 * 1000, 
       }).json({
       success: true,
@@ -103,7 +100,7 @@ const logoutUser = (req, res) => {
 
 //auth middleware
 const authMiddleware = async (req, res, next) => {
-  const token = req.cookies.token;
+  const token = req.cookies.token || req.headers.authorization?.split(" ")[1];
   if (!token)
     return res.status(401).json({
       success: false,
