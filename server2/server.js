@@ -49,6 +49,7 @@ const corsOptions ={
 
 const app = express();
 const PORT = 5000;
+app.set('trust proxy', 1);
 app.use(cors(corsOptions));
 
 
