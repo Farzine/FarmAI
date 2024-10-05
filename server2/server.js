@@ -1,9 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const passport = require('passport');
-const session = require('express-session');
 const bodyParser = require('body-parser');
-const multer = require('multer');
 const cors = require('cors'); 
 const mongoose = require('mongoose');
 const cookieParser = require('cookie-parser');
@@ -63,12 +61,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(cookieParser());
 
-// Set up express-session middleware (required for persistent login sessions)
-app.use(session({
-  secret: process.env.SECRET_KEY,
-  resave: false,
-  saveUninitialized: true,
-}));
 
 // Initialize Passport and session handling
 app.use(passport.initialize());
