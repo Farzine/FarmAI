@@ -10,6 +10,11 @@ const cookieParser = require('cookie-parser');
 const frontUrl = process.env.NEXT_PUBLIC_APP_FRONTEND_URL;
 
 
+
+const app = express();
+const PORT = 5000;
+app.set('trust proxy', 1);
+
 ////////////////////////////////////////////////////////////////////
 const authRouter = require("./routes/auth/auth-routes");
 const adminProductsRouter = require("./routes/admin/products-routes");
@@ -47,8 +52,7 @@ const corsOptions ={
   optionSuccessStatus:200,
 }
 
-const app = express();
-const PORT = 5000;
+
 
 app.use(cors(corsOptions));
 
