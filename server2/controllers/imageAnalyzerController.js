@@ -14,7 +14,6 @@ const createImageAnalyzer = async (req, res) => {
   try {
     const { userInputText } = req.body;
     const imageFile = req.file; 
-    const userId = req.user._id;
 
     let cloudinaryImageUrl = null;
     let generatedImageUrl = null;
@@ -111,7 +110,6 @@ const createImageAnalyzer = async (req, res) => {
 
 
     const newEntry = new ImageAnalyzer({
-      user: userId, 
       userInputText,
       cloudinaryImageUrl: cloudinaryImageUrl || '',
       gptResponse: gptText,

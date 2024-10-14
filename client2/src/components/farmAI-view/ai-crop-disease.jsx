@@ -3,7 +3,6 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import axios from "axios";
-import Cookies from "js-cookie";
 import { useNavigate } from "react-router-dom";
 
 const AICropDisease = () => {
@@ -31,8 +30,6 @@ const AICropDisease = () => {
     setResponseData(null);
 
     try {
-      const token = Cookies.get("token");
-      if (!token) handleNavigate();
       const formData = new FormData();
       formData.append("userInputText", description);
       if (selectedImage) {
@@ -45,7 +42,6 @@ const AICropDisease = () => {
         {
           headers: {
             "Content-Type": "multipart/form-data",
-            Authorization: `Bearer ${token}`,
           },
         }
       );
