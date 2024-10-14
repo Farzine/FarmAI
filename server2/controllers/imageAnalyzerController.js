@@ -59,9 +59,16 @@ const createImageAnalyzer = async (req, res) => {
     messages: [
       {
         "role": "user",
-        "content": userInputText,
+        "content": [
+          { "type": "text", "text": userInputText },
+          {
+            "type": "image_url",
+            "image_url": {
+              "url": cloudinaryImageUrl,
+            },
+          },
+        ],
       },
-      ...(cloudinaryImageUrl ? [{ "role": "user", "content": { "type": "image_url", "image_url": cloudinaryImageUrl } }] : [])
     ],
     max_tokens: 300,
   });

@@ -3,7 +3,7 @@
 import React, { useState } from "react";
 import ReactMarkdown from "react-markdown";
 import axios from "axios";
-import { useNavigate } from "react-router-dom";
+
 
 const AICropDisease = () => {
   const [description, setDescription] = useState("");
@@ -11,11 +11,7 @@ const AICropDisease = () => {
   const [responseData, setResponseData] = useState(null);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();
 
-  function handleNavigate() {
-    navigate("/auth/login");
-  }
 
   const handleImageChange = (e) => {
     if (e.target.files && e.target.files[0]) {
