@@ -33,7 +33,7 @@ const { MONGO_URI } = require('./config/config');
 
 
 const corsOptions ={
-  origin:`${frontUrl}`, 
+  origin:`${frontUrl},"https://farm-ai-fz.vercel.app/"`, 
   methods:['GET','POST','PUT','DELETE'],
   allowedHeaders: [
     "Content-Type",
